@@ -52,13 +52,17 @@ Sistem klasifikasi deteksi dini pneumonia berbasis deep learning yang menggunaka
 
 Berikut adalah tampilan dari aplikasi sistem klasifikasi deteksi pneumonia:
 
-![Tampilan Beranda](static/screenshot/user_beranda.jpeg)
-![Tampilan Upload](static/screenshot/user_prediksi.jpeg)
-<div style="display: flex; gap: 10px;">
-  <img src="static/screenshot/normal.jpeg" alt="Hasil Prediksi Normal" width="20%">
-  <img src="static/screenshot/pneumonia.jpeg" alt="Hasil Prediksi Pneumonia" width="20%">
+<div style="display: flex; gap: 5px; flex-wrap: wrap;">
+  <img src="static/screenshot/user_beranda.jpeg" alt="Tampilan Beranda" width="40%">
+  <img src="static/screenshot/user_prediksi.jpeg" alt="Tampilan Upload" width="40%">
+  <img src="static/screenshot/admin_dashboard.jpeg" alt="Tampilan Admin" width="40%">
 </div>
-![Tampilan Admin](static/screenshot/admin_dashboard.jpeg)
+
+<div style="display: flex; gap: 10px; margin-top: 10px;">
+  <img src="static/screenshot/normal.jpeg" alt="Hasil Prediksi Normal" width="40%">
+  <img src="static/screenshot/pneumonia.jpeg" alt="Hasil Prediksi Pneumonia" width="40%">
+</div>
+
 
 ## Kontribusi
 
