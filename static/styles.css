@@ -1,0 +1,212 @@
+body {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 60px; /* Memberi ruang untuk footer jika diperlukan */
+}
+
+.bg-beranda::before,
+.bg-predict::before,
+.bg-result::before,
+.bg-history::before,
+.bg-login::before,
+.bg-register::before,
+.bg-admin::before {
+    content: "";
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    z-index: -1;
+}
+
+.bg-beranda::before {
+    background-image: url("/static/beranda.jpg");
+    filter: blur(2px) brightness(0.8);
+}
+
+.bg-predict::before {
+    background-image: url("/static/prediksi.jpg");
+    filter: blur(4px) brightness(0.4);
+}
+
+.bg-history::before {
+    background-image: url("/static/riwayat2.jpg");
+    filter: blur(3px) brightness(0.9);
+}
+
+.bg-result::before {
+    background-image: url("/static/riwayat3.jpg");
+}
+
+.bg-login::before,
+.bg-register::before {
+    background-image: url("/static/home.jpg");
+    filter: blur(3px) brightness(0.8);
+}
+
+
+/* Styling tambahan untuk responsif */
+.text-justify {
+    text-align: justify;
+}
+
+/* Media query untuk perangkat mobile */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.2rem;
+    }
+    
+    .btn {
+        margin-bottom: 10px;
+    }
+    
+    .modal-dialog {
+        margin: 10px;
+    }
+    
+    .modal-xl {
+        max-width: 100%;
+    }
+    
+    .table-responsive {
+        font-size: 0.8rem;
+    }
+    
+    .table th, .table td {
+        padding: 0.5rem;
+    }
+    
+    /* Menyesuaikan background untuk mobile */
+    .bg-beranda::before,
+    .bg-predict::before,
+    .bg-result::before,
+    .bg-history::before,
+    .bg-login::before,
+    .bg-register::before,
+    .bg-admin::before {
+        background-size: cover;
+        background-position: center center;
+        opacity: 0.3; /* Mengurangi opacity untuk mobile */
+    }
+    
+    .bg-predict::before {
+        filter: blur(2px) brightness(0.4);
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.375rem 0.75rem;
+    }
+    
+    .form-label {
+        font-size: 0.9rem;
+    }
+    
+    .form-control {
+        font-size: 0.9rem;
+    }
+    
+    /* Menyesuaikan background lebih lanjut untuk mobile kecil */
+    .bg-beranda::before,
+    .bg-predict::before,
+    .bg-result::before,
+    .bg-history::before,
+    .bg-login::before,
+    .bg-register::before,
+    .bg-admin::before {
+        opacity: 0.2;
+    }
+}
+
+/* Memastikan gambar tidak overflow */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Styling untuk modal */
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-footer {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Card styling untuk login/registrasi */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Navbar styling */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Feedback form styling */
+.scale-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.scale-btn:hover:not(.btn-primary) {
+    transform: scale(1.1);
+    background-color: #e9ecef;
+}
+
+.scale-btn.btn-primary {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#ratingDescription {
+    transition: all 0.3s ease;
+}
+
+/* Animation for feedback buttons */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn-primary.animate-pulse {
+    animation: pulse 0.5s ease;
+}

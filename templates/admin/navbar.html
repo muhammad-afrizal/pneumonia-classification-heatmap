@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/admin">
+      <img src="/static/lung-logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbarNav" aria-controls="adminNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNavbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">Dashboard</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        {% if session and session['user_id'] %}
+          <li class="nav-item">
+            <span class="d-flex navbar-text me-3 mb-0">Halo, {{ user[1] if user else 'Admin' }}!</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

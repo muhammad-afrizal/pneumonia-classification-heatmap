@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Deteksi Pneumonia</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="bg-admin">
+    {% include 'admin/navbar.html' %}
+    
+    <div class="container py-4">
+        <h1 class="mb-4">Admin Dashboard</h1>
+        
+        <!-- Stats Overview -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Prediksi</h5>
+                        <p class="card-text display-6">{{ stats.total_predictions or 0 }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Feedback</h5>
+                        <p class="card-text display-6">{{ stats.total_feedback or 0 }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Accuracy Rate</h5>
+                        <p class="card-text display-6">{{ "%.1f"|format(stats.accuracy_rate or 0) }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab">Riwayat Prediksi</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback" type="button" role="tab">Feedback</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="usermanagement-tab" data-bs-toggle="tab" data-bs-target="#usermanagement" type="button" role="tab">User Management</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="adminTabsContent">
+            <!-- Riwayat Prediksi Tab -->
+            <div class="tab-pane fade show active" id="history" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Riwayat Prediksi</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>User</th>
+                                                <th>Filename</th>
+                                                <th>Prediction</th>
+                                                <th>Confidence</th>
+                                                <th>Timestamp</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for record in history %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td>{{ record[9] }}</td>
+                                                <td>{{ record[2] }}</td>
+                                                <td>{{ record[3] }}</td>
+                                                <td>{{ record[4] }}</td>
+                                                <td>{{ record[8] }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#resultModal" 
+                                                        data-id="{{ record[0] }}" 
+                                                        data-user="{{ record[9] }}" 
+                                                        data-filename="{{ record[2] }}" 
+                                                        data-clahe-filename="{{ record[5] if record[5] else 'clahe_' + record[2] }}"
+                                                        data-saliency-filename="{{ record[6] if record[6] else 'saliency_' + record[2] }}"
+                                                        data-overlay-filename="{{ record[7] if record[7] else 'overlay_' + record[2] }}"
+                                                        data-prediction="{{ record[3] }}" 
+                                                        data-confidence="{{ record[4] }}" 
+                                                        data-timestamp="{{ record[8] }}">
+                                                        Lihat Detail
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback Tab -->
+            <div class="tab-pane fade" id="feedback" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Feedback Pengguna</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>User</th>
+                                                <th>Filename</th>
+                                                <th>Accuracy</th>
+                                                <th>Rating</th>
+                                                <th>Reason</th>
+                                                <th>Timestamp</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for fb in feedback %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td>{{ fb[9] }}</td>
+                                                <td>{{ fb[6] }}</td>
+                                                <td>{{ 'BENAR' if fb[2] else 'SALAH' }}</td>
+                                                <td>{{ fb[3] if fb[3] else '-' }}</td>
+                                                <td>{{ fb[4] if fb[4] else '-' }}</td>
+                                                <td>{{ fb[5] }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Management Tab -->
+            <div class="tab-pane fade" id="usermanagement" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">User Management</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Tabel Admin -->
+                                <h6 class="mb-3">Admin</h6>
+                                <div class="table-responsive mb-2">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>ID</th>
+                                                <th>Username</th>
+                                                <th>Registered</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for usr in users if usr[3] == 'admin' %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td>{{ usr[0] }}</td>
+                                                <td>{{ usr[1] }}</td>
+                                                <td>{{ usr[2] }}</td>
+                                                <td>
+                                                    <form method="POST" action="{{ url_for('update_user_role_route', user_id=usr[0]) }}" class="d-inline">
+                                                        <select name="role" class="form-select form-select-sm d-inline w-auto">
+                                                            <option value="user" {% if usr[3] == 'user' %}selected{% endif %}>User</option>
+                                                            <option value="admin" {% if usr[3] == 'admin' %}selected{% endif %}>Admin</option>
+                                                        </select>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- Tabel User -->
+                                <h6 class="mb-3">User</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>ID</th>
+                                                <th>Username</th>
+                                                <th>Registered</th>
+                                                <th>Predictions</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for usr in users if usr[3] == 'user' %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td>{{ usr[0] }}</td>
+                                                <td>{{ usr[1] }}</td>
+                                                <td>{{ usr[2] }}</td>
+                                                <td>{{ usr[4] }}</td>
+                                                <td>
+                                                    <form method="POST" action="{{ url_for('update_user_role_route', user_id=usr[0]) }}" class="d-inline">
+                                                        <select name="role" class="form-select form-select-sm d-inline w-auto">
+                                                            <option value="user" {% if usr[3] == 'user' %}selected{% endif %}>User</option>
+                                                            <option value="admin" {% if usr[3] == 'admin' %}selected{% endif %}>Admin</option>
+                                                        </select>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Result Modal -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultModalLabel">Detail Hasil Prediksi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Informasi Prediksi</h6>
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <th>User:</th>
+                                        <td id="modal-user"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Filename:</th>
+                                        <td id="modal-filename"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Hasil Prediksi:</th>
+                                        <td id="modal-prediction"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tingkat Kepercayaan:</th>
+                                        <td id="modal-confidence"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Waktu Prediksi:</th>
+                                        <td id="modal-timestamp"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Visualisasi</h6>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <img id="modal-original-image" src="" class="img-fluid mb-2" style="max-height: 150px;" alt="Gambar Asli">
+                                        <small class="d-block">Asli</small>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <img id="modal-clahe-image" src="" class="img-fluid mb-2" style="max-height: 150px;" alt="Gambar CLAHE">
+                                        <small class="d-block">CLAHE</small>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <img id="modal-saliency-image" src="" class="img-fluid mb-2" style="max-height: 150px;" alt="Saliency Map">
+                                        <small class="d-block">Saliency</small>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <img id="modal-overlay-image" src="" class="img-fluid mb-2" style="max-height: 150px;" alt="Overlay Map">
+                                        <small class="d-block">Overlay</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle modal popup for result details
+        var resultModal = document.getElementById('resultModal');
+        resultModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget;
+            
+            // Extract info from data-bs-* attributes
+            var user = button.getAttribute('data-user');
+            var filename = button.getAttribute('data-filename');
+            var claheFilename = button.getAttribute('data-clahe-filename');
+            var saliencyFilename = button.getAttribute('data-saliency-filename');
+            var overlayFilename = button.getAttribute('data-overlay-filename');
+            var prediction = button.getAttribute('data-prediction');
+            var confidence = button.getAttribute('data-confidence');
+            var timestamp = button.getAttribute('data-timestamp');
+            
+            // Update the modal's content
+            document.getElementById('modal-user').textContent = user;
+            document.getElementById('modal-filename').textContent = filename;
+            document.getElementById('modal-prediction').textContent = prediction;
+            document.getElementById('modal-confidence').textContent = confidence;
+            document.getElementById('modal-timestamp').textContent = timestamp;
+            
+            // Update images
+            var baseUrl = '/static/uploads/';
+            document.getElementById('modal-original-image').src = baseUrl + filename;
+            document.getElementById('modal-clahe-image').src = baseUrl + claheFilename;
+            document.getElementById('modal-saliency-image').src = baseUrl + saliencyFilename;
+            document.getElementById('modal-overlay-image').src = baseUrl + overlayFilename;
+            
+            // Add fallback for images
+            var images = [
+                document.getElementById('modal-clahe-image'),
+                document.getElementById('modal-saliency-image'),
+                document.getElementById('modal-overlay-image')
+            ];
+            
+            images.forEach(function(img) {
+                img.onerror = function() {
+                    this.src = baseUrl + filename;
+                    this.alt = "Gambar asli";
+                };
+            });
+        });
+    </script>
+</body>
+</html>
