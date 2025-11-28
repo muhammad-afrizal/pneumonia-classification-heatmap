@@ -14,30 +14,29 @@ Sistem klasifikasi deteksi dini pneumonia berbasis deep learning yang menggunaka
 - Riwayat prediksi dan feedback
 - Statistik penggunaan dan akurasi
 
-## Struktur File                                                             │
- │     93 +                                                                              │
- │     94 + ```                                                                          │
- │     95 + ├── app.py                 # Aplikasi utama Flask                            │
- │     96 + ├── db.py                  # Fungsi-fungsi database                          │
- │     97 + ├── env.py                 # Konfigurasi environment                         │
- │     98 + ├── requirements.txt       # Dependensi project                              │
- │     99 + ├── .env                   # Konfigurasi environment (tidak di-commit)       │
- │    100 + ├── .gitignore            # File yang diabaikan oleh Git                     │
- │    101 + ├── modelPneumonia.h5     # Model pembelajaran mesin                         │
- │    102 + ├── static/               # File statis (CSS, JS, gambar)                    │
- │    103 + │   ├── uploads/          # Tempat upload gambar (akan dibuat otomatis)      │
- │    104 + │   └── styles.css        # File CSS                                         │
- │    105 + ├── templates/            # Template HTML                                    │
- │    106 + │   ├── admin/            # Template untuk admin                             │
- │    107 + │   ├── index.html        # Halaman beranda                                  │
- │    108 + │   ├── predict.html      # Halaman upload dan prediksi                      │
- │    109 + │   ├── result.html       # Halaman hasil prediksi                           │
- │    110 + │   ├── history.html      # Halaman riwayat                                  │
- │    111 + │   ├── login.html        # Halaman login                                    │
- │    112 + │   ├── register.html     # Halaman registrasi                               │
- │    113 + │   └── navbar.html       # Komponen navbar                                  │
- │    114 + └── README.md             # File dokumentasi ini                             │
- │    115 + ```
+## Struktur File
+```
+├── app.py                 # Aplikasi utama Flask
+├── db.py                  # Fungsi-fungsi database
+├── env.py                 # Konfigurasi environment
+├── requirements.txt       # Dependensi project
+├── .env                   # Konfigurasi environment (tidak di-commit)
+├── .gitignore            # File yang diabaikan oleh Git
+├── modelPneumonia.h5     # Model pembelajaran mesin
+├── static/               # File statis (CSS, JS, gambar)
+│   ├── uploads/          # Tempat upload gambar (akan dibuat otomatis)
+│   └── styles.css        # File CSS
+├── templates/            # Template HTML
+│   ├── admin/            # Template untuk admin
+│   ├── index.html        # Halaman beranda
+│   ├── predict.html      # Halaman upload dan prediksi
+│   ├── result.html       # Halaman hasil prediksi
+│   ├── history.html      # Halaman riwayat     
+│   ├── login.html        # Halaman login       
+│   ├── register.html     # Halaman registrasi  
+│   └── navbar.html       # Komponen navbar     
+└── README.md             # File dokumentasi ini
+```
 
 ## Teknologi yang Digunakan
 
