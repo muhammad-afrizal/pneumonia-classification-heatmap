@@ -48,32 +48,6 @@ Sistem klasifikasi deteksi dini pneumonia berbasis deep learning yang menggunaka
 - **Frontend**: HTML, CSS, Bootstrap
 - **Environment**: python-dotenv
 
-## Screenshot
-
-Berikut adalah tampilan dari aplikasi sistem klasifikasi deteksi pneumonia:
-
-<div style="display: flex; gap: 5px; flex-wrap: wrap;">
-  <img src="static/screenshot/user_beranda.jpeg" alt="Tampilan Beranda" width="100%">
-  <img src="static/screenshot/user_prediksi.jpeg" alt="Tampilan Upload" width="100%">
-  <img src="static/screenshot/admin_dashboard.jpeg" alt="Tampilan Admin" width="50%">
-</div>
-
-<div style="display: flex; gap: 10px; margin-top: 10px;">
-  <img src="static/screenshot/normal.jpeg" alt="Hasil Prediksi Normal" width="45%">
-  <img src="static/screenshot/pneumonia.jpeg" alt="Hasil Prediksi Pneumonia" width="50%">
-</div>
-
-
-## Kontribusi
-
-Jika Anda ingin berkontribusi:
-
-1. Fork project ini
-2. Buat branch fitur baru (`git checkout -b fitur/fitur-baru`)
-3. Commit perubahan Anda (`git commit -m 'Tambah fitur baru'`)
-4. Push ke branch (`git push origin fitur/fitur-baru`)
-5. Buat pull request
-
 ## Akurasi Model
 
 Berikut adalah hasil pelatihan model pada setiap epoch:
@@ -87,13 +61,32 @@ Berikut adalah hasil pelatihan model pada setiap epoch:
 | 5      | 94.16%         | 95.90%       | 0.1552 | 0.1406   | 0.0010        |
 | 6      | 95.14%         | 94.50%       | 0.1308 | 0.1256   | 0.0010        |
 
-Model menunjukkan peningkatan akurasi yang signifikan selama proses pelatihan, dengan akurasi model sebesar 95.14% dan akurasi validasi sebesar 94.50% pada epoch terakhir.
+## Kontribusi
+
+Jika Anda ingin berkontribusi:
+
+1. Fork project ini
+2. Buat branch fitur baru (`git checkout -b fitur/fitur-baru`)
+3. Commit perubahan Anda (`git commit -m 'Tambah fitur baru'`)
+4. Push ke branch (`git push origin fitur/fitur-baru`)
+5. Buat pull request
+
+## Screenshot
+
+Berikut adalah tampilan dari aplikasi sistem klasifikasi deteksi pneumonia:
+
+<div style="display: flex; gap: 5px; flex-wrap: wrap;">
+  <img src="static/screenshot/user_beranda.jpeg" alt="Tampilan Beranda" width="100%">
+  <img src="static/screenshot/user_prediksi.jpeg" alt="Tampilan Upload" width="100%">
+</div>
+
+<div style="display: flex; gap: 10px; margin-top: 10px;">
+  <img src="static/screenshot/normal.jpeg" alt="Hasil Prediksi Normal" width="45%">
+  <img src="static/screenshot/pneumonia.jpeg" alt="Hasil Prediksi Pneumonia" width="50%">
+</div>
+
+<img src="static/screenshot/admin_dashboard.jpeg" alt="Tampilan Admin" width="100%">
 
 ## Lisensi
 
 Proyek ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) untuk detail.
-
-## Penulis
-
-- Nama: [Nama Anda - akan diisi]
-- Email: [Email Anda - akan diisi]
