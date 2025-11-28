@@ -14,105 +14,30 @@ Sistem klasifikasi deteksi dini pneumonia berbasis deep learning yang menggunaka
 - Riwayat prediksi dan feedback
 - Statistik penggunaan dan akurasi
 
-## Prasyarat
-
-Sebelum memulai, pastikan Anda telah menginstal:
-
-- Python 3.8 atau lebih baru
-- MySQL Server
-- Git
-
-## Instalasi
-
-1. Clone repository ini:
-   ```bash
-   git clone <url-repository-anda>
-   cd <nama-folder-repository>
-   ```
-
-2. Buat virtual environment (disarankan):
-   ```bash
-   python -m venv venv
-   ```
-
-3. Aktifkan virtual environment:
-   - Di Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - Di macOS/Linux:
-     ```bash
-     source venv/bin/activate
-     ```
-
-4. Install dependensi:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. Buat database MySQL:
-   - Buat database dengan nama sesuai konfigurasi di `.env`
-   - Aplikasi akan otomatis membuat tabel-tabel yang dibutuhkan saat pertama kali dijalankan
-
-## Konfigurasi
-
-1. Buat file `.env` di root direktori dengan isi berikut:
-   ```
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=your_password
-   DB_NAME=pneumonia_db
-   DB_PORT=3306
-   SECRET_KEY=your-very-long-random-string-here
-   ```
-
-2. Ganti nilai-nilai konfigurasi sesuai dengan pengaturan lokal Anda:
-   - Ganti `your_password` dengan password MySQL Anda
-   - Ganti `pneumonia_db` dengan nama database yang Anda buat
-   - Ganti `your-very-long-random-string-here` dengan secret key yang aman dan acak
-
-3. Letakkan file model pembelajaran mesin:
-   - Letakkan file model `modelPneumonia.h5` di root direktori project
-   - Pastikan nama file sesuai dengan yang digunakan dalam `app.py`
-
-## Cara Menjalankan
-
-1. Pastikan MySQL server berjalan
-2. Pastikan virtual environment aktif
-3. Jalankan aplikasi:
-   ```bash
-   python app.py
-   ```
-4. Buka browser dan akses `http://localhost:5000`
-
-## Penggunaan
-
-[Ceritakan cara menggunakan aplikasi - akan diisi]
-
-## Struktur File
-
-```
-├── app.py                 # Aplikasi utama Flask
-├── db.py                  # Fungsi-fungsi database
-├── env.py                 # Konfigurasi environment
-├── requirements.txt       # Dependensi project
-├── .env                   # Konfigurasi environment (tidak di-commit)
-├── .gitignore            # File yang diabaikan oleh Git
-├── modelPneumonia.h5     # Model pembelajaran mesin
-├── static/               # File statis (CSS, JS, gambar)
-│   ├── uploads/          # Tempat upload gambar (akan dibuat otomatis)
-│   └── styles.css        # File CSS
-├── templates/            # Template HTML
-│   ├── admin/            # Template untuk admin
-│   ├── index.html        # Halaman beranda
-│   ├── predict.html      # Halaman upload dan prediksi
-│   ├── result.html       # Halaman hasil prediksi
-│   ├── history.html      # Halaman riwayat
-│   ├── login.html        # Halaman login
-│   ├── register.html     # Halaman registrasi
-│   └── navbar.html       # Komponen navbar
-└── README.md             # File dokumentasi ini
-```
+## Struktur File                                                             │
+ │     93 +                                                                              │
+ │     94 + ```                                                                          │
+ │     95 + ├── app.py                 # Aplikasi utama Flask                            │
+ │     96 + ├── db.py                  # Fungsi-fungsi database                          │
+ │     97 + ├── env.py                 # Konfigurasi environment                         │
+ │     98 + ├── requirements.txt       # Dependensi project                              │
+ │     99 + ├── .env                   # Konfigurasi environment (tidak di-commit)       │
+ │    100 + ├── .gitignore            # File yang diabaikan oleh Git                     │
+ │    101 + ├── modelPneumonia.h5     # Model pembelajaran mesin                         │
+ │    102 + ├── static/               # File statis (CSS, JS, gambar)                    │
+ │    103 + │   ├── uploads/          # Tempat upload gambar (akan dibuat otomatis)      │
+ │    104 + │   └── styles.css        # File CSS                                         │
+ │    105 + ├── templates/            # Template HTML                                    │
+ │    106 + │   ├── admin/            # Template untuk admin                             │
+ │    107 + │   ├── index.html        # Halaman beranda                                  │
+ │    108 + │   ├── predict.html      # Halaman upload dan prediksi                      │
+ │    109 + │   ├── result.html       # Halaman hasil prediksi                           │
+ │    110 + │   ├── history.html      # Halaman riwayat                                  │
+ │    111 + │   ├── login.html        # Halaman login                                    │
+ │    112 + │   ├── register.html     # Halaman registrasi                               │
+ │    113 + │   └── navbar.html       # Komponen navbar                                  │
+ │    114 + └── README.md             # File dokumentasi ini                             │
+ │    115 + ```
 
 ## Teknologi yang Digunakan
 
