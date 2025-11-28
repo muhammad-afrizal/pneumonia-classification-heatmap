@@ -55,8 +55,8 @@ Berikut adalah tampilan dari aplikasi sistem klasifikasi deteksi pneumonia:
 ![Tampilan Beranda](static/screenshot/user_beranda.jpeg)
 ![Tampilan Upload](static/screenshot/user_prediksi.jpeg)
 <div style="display: flex; gap: 10px;">
-  <img src="static/screenshot/normal.jpeg" alt="Hasil Prediksi Normal" width="45%">
-  <img src="static/screenshot/pneumonia.jpeg" alt="Hasil Prediksi Pneumonia" width="45%">
+  <img src="static/screenshot/normal.jpeg" alt="Hasil Prediksi Normal" width="20%">
+  <img src="static/screenshot/pneumonia.jpeg" alt="Hasil Prediksi Pneumonia" width="20%">
 </div>
 ![Tampilan Admin](static/screenshot/admin_dashboard.jpeg)
 
