@@ -1,0 +1,39 @@
+# Environment variables
+.env
+
+# Database
+history.db
+
+# Uploads folder
+static/uploads/**
+
+# Model files
+modelPneumonia.h5
+modelPneumonia_modelfit1.h5
+modelPneumonia(1).h5
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Virtual Environment
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
