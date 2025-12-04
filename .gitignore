@@ -38,3 +38,6 @@ Thumbs.db
 ehthumbs.db
 Icon?
 
+# Streamlit secrets
+.streamlit/secrets.toml
+

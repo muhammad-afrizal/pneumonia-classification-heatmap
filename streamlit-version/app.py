@@ -7,6 +7,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import tempfile
 import os
+import requests
+from pathlib import Path
 
 # Set page config
 st.set_page_config(
@@ -22,15 +24,43 @@ This application uses deep learning to classify chest X-ray images as Normal or 
 Upload an X-ray image to get the classification result along with visual explanations.
 """)
 
-# Load model
-@st.cache_resource
+# Load model - modified to download from external source using secrets
+@st.cache_resource(show_spinner="Loading model...")
 def load_model():
+    model_path = Path("modelPneumonia.h5")
+
+    if not model_path.exists():
+        with st.spinner("Downloading model... This may take a moment."):
+            try:
+                # Get the model URL from secrets
+                model_url = st.secrets["MODEL_URL"]
+
+                response = requests.get(model_url)
+                response.raise_for_status()
+
+                with open(model_path, "wb") as f:
+                    f.write(response.content)
+
+                st.success("Model downloaded successfully!")
+            except KeyError:
+                st.error("Model URL not found in secrets.")
+                st.info("Please set MODEL_URL in Streamlit Secrets")
+                return None
+            except requests.exceptions.RequestException as e:
+                st.error(f"Network error downloading model: {e}")
+                st.info("Please make sure the model URL is correctly set in Streamlit Secrets")
+                return None
+            except Exception as e:
+                st.error(f"Unexpected error downloading model: {e}")
+                st.info("Please make sure the model URL is correctly set in Streamlit Secrets")
+                return None
+
     try:
-        model = tf.keras.models.load_model("../modelPneumonia.h5")
+        model = tf.keras.models.load_model(model_path)
         return model
     except Exception as e:
         st.error(f"Error loading model: {e}")
-        st.info("Please make sure modelPneumonia.h5 is in the parent directory")
+        st.info("Please make sure modelPneumonia.h5 is accessible")
         return None
 
 model = load_model()
@@ -61,11 +91,11 @@ if model is not None:
             # Convert to grayscale and resize
             img = image.convert('L').resize((150, 150))
             img_array = np.array(img)
-            
+
             # Apply CLAHE for contrast enhancement
             clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(8, 8))
             img_clahe = clahe.apply(img_array)
-            
+
             # Normalize and prepare for model
             img_clahe_normalized = img_clahe / 255.0
             img_input = img_clahe_normalized.reshape(1, 150, 150, 1)
@@ -153,7 +183,7 @@ if model is not None:
         st.info("ℹ️ **Note:** This tool is designed for educational and research purposes. It should not be used as a substitute for professional medical diagnosis.")
 
 else:
-    st.error("Model not loaded. Please ensure modelPneumonia.h5 is in the parent directory.")
+    st.error("Model not loaded. Please ensure model ID is correctly set in Streamlit Secrets.")
     st.stop()
 
 # Footer
