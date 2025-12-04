@@ -32,8 +32,11 @@ def load_model():
     if not model_path.exists():
         with st.spinner("Downloading model... This may take a moment."):
             try:
-                # Get the model URL from secrets
-                model_url = st.secrets["MODEL_URL"]
+                # Get the Google Drive file ID from secrets
+                file_id = st.secrets["GOOGLE_DRIVE_MODEL_ID"]
+
+                # Construct the download URL for Google Drive
+                model_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
                 response = requests.get(model_url)
                 response.raise_for_status()
@@ -43,16 +46,16 @@ def load_model():
 
                 st.success("Model downloaded successfully!")
             except KeyError:
-                st.error("Model URL not found in secrets.")
-                st.info("Please set MODEL_URL in Streamlit Secrets")
+                st.error("Google Drive model ID not found in secrets.")
+                st.info("Please set GOOGLE_DRIVE_MODEL_ID in Streamlit Secrets")
                 return None
             except requests.exceptions.RequestException as e:
                 st.error(f"Network error downloading model: {e}")
-                st.info("Please make sure the model URL is correctly set in Streamlit Secrets")
+                st.info("Please make sure the Google Drive model ID is correctly set in Streamlit Secrets")
                 return None
             except Exception as e:
                 st.error(f"Unexpected error downloading model: {e}")
-                st.info("Please make sure the model URL is correctly set in Streamlit Secrets")
+                st.info("Please make sure the Google Drive model ID is correctly set in Streamlit Secrets")
                 return None
 
     try:
@@ -183,7 +186,7 @@ if model is not None:
         st.info("ℹ️ **Note:** This tool is designed for educational and research purposes. It should not be used as a substitute for professional medical diagnosis.")
 
 else:
-    st.error("Model not loaded. Please ensure model ID is correctly set in Streamlit Secrets.")
+    st.error("Model not loaded. Please ensure Google Drive model ID is correctly set in Streamlit Secrets.")
     st.stop()
 
 # Footer
