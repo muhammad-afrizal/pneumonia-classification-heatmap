@@ -49,12 +49,12 @@ if model is not None:
     if uploaded_file is not None:
         # Display the uploaded image
         col1, col2 = st.columns(2)
-        
+
         with col1:
             # Read and display original image
             image = Image.open(uploaded_file)
             st.subheader("Uploaded X-ray Image")
-            st.image(image, caption="Original Image", use_column_width=True)
+            st.image(image, caption="Original Image", use_container_width=True)
         
         with col2:
             # Process image for prediction
@@ -75,10 +75,10 @@ if model is not None:
                 pred = model.predict(img_input)[0][0]
                 prediction = labels[int(pred >= 0.5)]
                 confidence = (pred if pred >= 0.5 else 1 - pred) * 100
-                
+
                 # Display results
                 st.subheader("Prediction Results")
-                
+
                 if prediction == "Normal":
                     st.success(f"✅ **{prediction}**")
                     st.metric(label="Confidence", value=f"{confidence:.2f}%")
@@ -90,7 +90,7 @@ if model is not None:
         
         # Additional visualizations
         st.subheader("Visual Explanations")
-        
+
         # Generate saliency map
         with st.spinner('Generating visual explanations...'):
             # Saliency Map
@@ -105,32 +105,35 @@ if model is not None:
             saliency = np.abs(grads.numpy())
             saliency = np.max(saliency, axis=-1)
             saliency = (saliency - saliency.min()) / (saliency.max() - saliency.min())
-        
+
         # Display additional visualizations
         col3, col4, col5 = st.columns(3)
-        
+
         with col3:
             st.subheader("CLAHE Enhanced Image")
-            clahe_image = Image.fromarray(img_clahe)
-            st.image(clahe_image, caption="After CLAHE Enhancement", use_column_width=True)
-        
+            fig, ax = plt.subplots(figsize=(6, 6))
+            ax.imshow(img_clahe, cmap='gray') # Display the CLAHE image on the axis
+            ax.axis('off')
+            ax.set_title('CLAHE Enhancement')
+            st.pyplot(fig)
+
         with col4:
             st.subheader("Saliency Map Overlay")
             fig, ax = plt.subplots(figsize=(6, 6))
             ax.imshow(img_clahe, cmap='gray')
-            ax.imshow(saliency[0], cmap='hot', alpha=0.5)
+            ax.imshow(saliency, cmap='hot', alpha=0.5)
             ax.axis('off')
             ax.set_title('Saliency Map Overlay')
             st.pyplot(fig)
-        
+
         with col5:
             st.subheader("Saliency Heatmap")
             fig2, ax2 = plt.subplots(figsize=(6, 6))
-            ax2.imshow(saliency[0], cmap='hot')
+            ax2.imshow(saliency, cmap='hot')
             ax2.axis('off')
             ax2.set_title('Saliency Heatmap')
             st.pyplot(fig2)
-        
+
         # Show interpretation
         st.subheader("Interpretation")
         if prediction == "Normal":
@@ -145,7 +148,7 @@ if model is not None:
             The highlighted areas in the saliency map show which regions in the lungs
             showed patterns consistent with pneumonia.
             """.format(confidence))
-        
+
         st.markdown("---")
         st.info("ℹ️ **Note:** This tool is designed for educational and research purposes. It should not be used as a substitute for professional medical diagnosis.")
 
@@ -157,7 +160,6 @@ else:
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: gray;">
-    <p>Pneumonia Classification System using Deep Learning</p>
-    <p>This application uses a Convolutional Neural Network (CNN) model to classify chest X-rays.</p>
+    <p>Thesis Project - Pneumonia Classification using Convolutional Neural Network (CNN)</p>
 </div>
 """, unsafe_allow_html=True)
